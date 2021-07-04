@@ -1,30 +1,26 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-// import { connect } from 'react-redux'
-
 import {
   Container,
   Image,
   List,
   Menu,
-  Segment,
-  Input,
-  Icon
-} from "semantic-ui-react";
-import SearchWeather from "../components/WeatherWidgets/SearchWeather";
-import { fallingStars } from '../assets/svg/weather'
+  Segment
+} from "semantic-ui-react"
+import SearchWeather from "../components/WeatherWidgets/SearchWeather"
+import setIcon from "../assets/svg/weather"
 
 const PublicLayout = ({ children }) => {
     const history = useHistory()
 
     return (
       <div>
-        <Menu fixed="top" inverted>
+        <Menu fixed="top" inverted color="blue">
           <Container fluid>
             <Menu.Item as="a" header>
               <Image
                 size="mini"
-                src={fallingStars}
+                src={setIcon("fallingStars")}
                 style={{ marginRight: "1.5em" }}
                 onClick={() => {
                   history.push("/");
@@ -32,7 +28,7 @@ const PublicLayout = ({ children }) => {
               />
               TYWeather
             </Menu.Item>
-            
+
             <Menu.Menu position="right">
               <Menu.Item>
                 <SearchWeather />
@@ -78,15 +74,4 @@ const PublicLayout = ({ children }) => {
     );
 }
 
-// const mapStateToProps = state => ({
-//     isAuthenticated: selectGetSignInStatus(state),
-//     token: selectGetSignInResponse(state)
-// })
-
-
-// const mapDispatchToProps = dispatch => ({
-//     doSignOut: () => dispatch(signOutRequest())
-// })
-
-//export default connect(mapStateToProps, mapDispatchToProps)(PublicLayout)
 export default PublicLayout

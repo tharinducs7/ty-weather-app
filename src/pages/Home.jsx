@@ -2,16 +2,10 @@ import React, { useState, useEffect } from "react"
 import {
   Card,
   Image,
-  Button,
   Flag,
   List,
   Grid,
   Segment,
-  Label,
-  Statistic,
-  Header,
-  Icon,
-  Progress,
 } from "semantic-ui-react";
 import { connect } from "react-redux"
 import { getCurrentWeatherStart } from "../store/weather/weather.actions"
@@ -24,24 +18,7 @@ import {
   selectGetForecastData,
 } from "../store/weather/weather.selectors";
 import qs from "qs"
-import {
-  D1003,
-  wind,
-  thermometerC,
-  UV6,
-  humidity,
-  celsius,
-  pressure_high,
-  pressure_low,
-  cloudy,
-  sunrise,
-  sunset,
-  moonset,
-  moonrise,
-  waning_crescent,
-  max_temp,
-  
-} from "../assets/svg/weather";
+import setIcon from "../assets/svg/weather";
 import WeatherItem from "../components/WeatherWidgets/ListWeatherItem"
 import WeatherItem2 from "../components/WeatherWidgets/ListWeatherItem2"
 import WeatherMap from "../components/WeatherWidgets/WeatherMap"
@@ -73,17 +50,7 @@ const Home = ({
     await getCurrentWeather(qs.stringify(params))
     setWeatherNow(currentWeather)
     setLocationNow(currentLocation)
-    console.log(forecastWeather);
-  }
 
-  const setIcon = (phase) => {
-    const key = phase.replace(/\s/g, "_").toLowerCase();
-    switch (key) {
-      case "waning_crescent":
-          return waning_crescent;
-      default:
-        break;
-    }
   }
 
   return (
@@ -94,7 +61,13 @@ const Home = ({
           {currentWeather && (
             <Card raised fluid>
               <Card.Content>
-                <Image floated="right" size="small" src={D1003} />
+                <Image
+                  floated="right"
+                  size="small"
+                  src={setIcon(
+                    `${currentWeather.condition.text}_${currentWeather.is_day}`
+                  )}
+                />
                 <Card.Header>{currentWeather.condition.text}</Card.Header>
                 <Card.Meta>
                   {" "}
@@ -105,41 +78,41 @@ const Home = ({
                 <Card.Description>
                   <List divided verticalAlign="middle">
                     <WeatherItem
-                      icon={celsius}
+                      icon={setIcon("celsius")}
                       value={currentWeather.temp_c}
                       title="Temperature"
                     />
                     <WeatherItem
-                      icon={thermometerC}
+                      icon={setIcon("thermometer celsius")}
                       value={currentWeather.feelslike_c}
                       title="Feels Like"
                     />
                     <WeatherItem
-                      icon={UV6}
+                      icon={setIcon("thermometer celsius")}
                       value={currentWeather.uv}
                       title="UV Index"
                     />
                     <WeatherItem
-                      icon={humidity}
+                      icon={setIcon("humidity")}
                       value={`${currentWeather.humidity}%`}
                       title="Humidity"
                     />
                     <WeatherItem
-                      icon={wind}
+                      icon={setIcon("wind")}
                       value={`${currentWeather.wind_dir} ${currentWeather.wind_kph} Km/h`}
                       title="Wind"
                     />
                     <WeatherItem
                       icon={
                         currentWeather.pressure_mb > 1030
-                          ? pressure_high
-                          : pressure_low
+                          ? setIcon("pressure_high")
+                          : setIcon("pressure_low")
                       }
                       value={`${currentWeather.pressure_mb} mbar`}
                       title="Pressure"
                     />
                     <WeatherItem
-                      icon={cloudy}
+                      icon={setIcon("cloudy")}
                       value={`${currentWeather.cloud}%`}
                       title="Cloud"
                     />
@@ -164,7 +137,9 @@ const Home = ({
             </Segment>
           )}
           <Segment>
-            {currentWeather && <AQI value={currentWeather.air_quality["gb-defra-index"]} />}
+            {currentWeather && (
+              <AQI value={currentWeather.air_quality["gb-defra-index"]} />
+            )}
           </Segment>
         </Grid.Column>
 
@@ -194,25 +169,25 @@ const Home = ({
                   <Card.Content extra>
                     <List horizontal size="mini">
                       <WeatherItem2
-                        icon={sunrise}
+                        icon={setIcon("sunrise")}
                         value={forecast.astro.sunrise}
                         title="Sunrise"
                       />
 
                       <WeatherItem2
-                        icon={sunset}
+                        icon={setIcon("sunset")}
                         value={forecast.astro.sunset}
                         title="Sunset"
                       />
 
                       <WeatherItem2
-                        icon={moonrise}
+                        icon={setIcon("moonrise")}
                         value={forecast.astro.moonrise}
                         title="Moonrise"
                       />
 
                       <WeatherItem2
-                        icon={moonset}
+                        icon={setIcon("moonset")}
                         value={forecast.astro.moonset}
                         title="Moonset"
                       />

@@ -1,6 +1,5 @@
 import React from "react";
 import ReactSpeedometer from "react-d3-speedometer";
-import { List, Image } from "semantic-ui-react";
 
 const AQI = (props) => {
     return (
@@ -9,35 +8,7 @@ const AQI = (props) => {
         height={230}
         needleHeightRatio={0.7}
         value={props.value}
-        currentValueText="AQI"
-        // customSegmentLabels={[
-        //   {
-        //     text: "Very Bad",
-        //     position: "INSIDE",
-        //     color: "#FFF",
-        //   },
-        //   {
-        //     text: "Bad",
-        //     position: "INSIDE",
-        //     color: "#555",
-        //   },
-        //   {
-        //     text: "Ok",
-        //     position: "INSIDE",
-        //     color: "#555",
-        //     fontSize: "19px",
-        //   },
-        //   {
-        //     text: "Good",
-        //     position: "INSIDE",
-        //     color: "#555",
-        //   },
-        //   {
-        //     text: "Very Good",
-        //     position: "INSIDE",
-        //     color: "#555",
-        //   },
-        // ]}
+        currentValueText="AIR QUALITY INDEX"
         segmentColors={[
           "#21ba45",
           "#21ba45",
