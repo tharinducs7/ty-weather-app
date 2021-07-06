@@ -6,6 +6,7 @@ import {
   List,
   Grid,
   Segment,
+  Container,
 } from "semantic-ui-react";
 import { connect } from "react-redux"
 import { getCurrentWeatherStart } from "../store/weather/weather.actions"
@@ -54,93 +55,92 @@ const Home = ({
   }
 
   return (
-    <Grid columns={3} divided>
-      <Grid.Row stretched>
+    <Grid columns={3} stackable>
+      <Grid.Row>
         <Grid.Column>
-          {/* <Segment basic> */}
           {currentWeather && (
-            <Card raised fluid>
-              <Card.Content>
-                <Image
-                  floated="right"
-                  size="small"
-                  src={setIcon(
-                    `${currentWeather.condition.text}_${currentWeather.is_day}`
-                  )}
-                />
-                <Card.Header>{currentWeather.condition.text}</Card.Header>
-                <Card.Meta>
-                  {" "}
-                  <Flag name={currentLocation.country.toLowerCase()} />
-                  {currentLocation.name}, {currentLocation.region},{" "}
-                  {currentLocation.country}{" "}
-                </Card.Meta>
-                <Card.Description>
-                  <List divided verticalAlign="middle">
-                    <WeatherItem
-                      icon={setIcon("celsius")}
-                      value={currentWeather.temp_c}
-                      title="Temperature"
-                    />
-                    <WeatherItem
-                      icon={setIcon("thermometer celsius")}
-                      value={currentWeather.feelslike_c}
-                      title="Feels Like"
-                    />
-                    <WeatherItem
-                      icon={setIcon("thermometer celsius")}
-                      value={currentWeather.uv}
-                      title="UV Index"
-                    />
-                    <WeatherItem
-                      icon={setIcon("humidity")}
-                      value={`${currentWeather.humidity}%`}
-                      title="Humidity"
-                    />
-                    <WeatherItem
-                      icon={setIcon("wind")}
-                      value={`${currentWeather.wind_dir} ${currentWeather.wind_kph} Km/h`}
-                      title="Wind"
-                    />
-                    <WeatherItem
-                      icon={
-                        currentWeather.pressure_mb > 1030
-                          ? setIcon("pressure_high")
-                          : setIcon("pressure_low")
-                      }
-                      value={`${currentWeather.pressure_mb} mbar`}
-                      title="Pressure"
-                    />
-                    <WeatherItem
-                      icon={setIcon("cloudy")}
-                      value={`${currentWeather.cloud}%`}
-                      title="Cloud"
-                    />
-                  </List>
-                </Card.Description>
-              </Card.Content>
-              {/* <Card.Content extra>
-                <div className="ui two buttons"></div>
-              </Card.Content> */}
-            </Card>
+            <Segment basic>
+              <Card raised fluid>
+                <Card.Content>
+                  <Image
+                    floated="right"
+                    size="small"
+                    src={setIcon(
+                      `${currentWeather.condition.text}_${currentWeather.is_day}`
+                    )}
+                  />
+                  <Card.Header>{currentWeather.condition.text}</Card.Header>
+                  <Card.Meta>
+                    {" "}
+                    <Flag name={currentLocation.country.toLowerCase()} />
+                    {currentLocation.name}, {currentLocation.region},{" "}
+                    {currentLocation.country}{" "}
+                  </Card.Meta>
+                  <Card.Description>
+                    <List divided verticalAlign="middle">
+                      <WeatherItem
+                        icon={setIcon("celsius")}
+                        value={currentWeather.temp_c}
+                        title="Temperature"
+                      />
+                      <WeatherItem
+                        icon={setIcon("thermometer celsius")}
+                        value={currentWeather.feelslike_c}
+                        title="Feels Like"
+                      />
+                      <WeatherItem
+                        icon={setIcon(`uv_index_${currentWeather.uv}`)}
+                        value={currentWeather.uv}
+                        title="UV Index"
+                      />
+                      <WeatherItem
+                        icon={setIcon("humidity")}
+                        value={`${currentWeather.humidity}%`}
+                        title="Humidity"
+                      />
+                      <WeatherItem
+                        icon={setIcon("wind")}
+                        value={`${currentWeather.wind_dir} ${currentWeather.wind_kph} Km/h`}
+                        title="Wind"
+                      />
+                      <WeatherItem
+                        icon={
+                          currentWeather.pressure_mb > 1030
+                            ? setIcon("pressure_high")
+                            : setIcon("pressure_low")
+                        }
+                        value={`${currentWeather.pressure_mb} mbar`}
+                        title="Pressure"
+                      />
+                      <WeatherItem
+                        icon={setIcon("cloudy")}
+                        value={`${currentWeather.cloud}%`}
+                        title="Cloud"
+                      />
+                    </List>
+                  </Card.Description>
+                </Card.Content>
+              </Card>
+            </Segment>
           )}
-          {/* </Segment> */}
         </Grid.Column>
 
         <Grid.Column>
-          {currentLocation && (
-            <Segment>
-              <WeatherMap
-                lat={currentLocation.lat}
-                long={currentLocation.lon}
-              />
-            </Segment>
-          )}
-          <Segment textAlign='center'> 
-            {currentWeather && (
-              <AQI value={currentWeather.air_quality["gb-defra-index"]} />
+          <Container>
+            {currentLocation && (
+              <Segment basic>
+                <WeatherMap
+                  lat={currentLocation.lat}
+                  long={currentLocation.lon}
+                />
+              </Segment>
             )}
-          </Segment>
+            <Segment textAlign="center" basic padded="very">
+              {currentWeather && (
+                <AQI value={currentWeather.air_quality["gb-defra-index"]} />
+              )}
+            </Segment>
+          </Container>
         </Grid.Column>
 
         <Grid.Column>
@@ -152,18 +152,41 @@ const Home = ({
                     <Image
                       floated="right"
                       size="mini"
-                      src={forecast.day.condition.icon}
+                      src={setIcon(forecast.day.condition.text)}
                     />
                     <Card.Header>
                       {forecast.date} - {forecast.day.condition.text}
                     </Card.Header>
-                    <Card.Meta>{forecast.day.condition.text}</Card.Meta>
+                    <Card.Meta>
+                      <Image size="mini" src={setIcon("umbrella")} />
+                      {`${forecast.day.daily_chance_of_rain}%`} 
+                    </Card.Meta>
                     <Card.Description>
-                      <Grid columns={3} divided>
-                        <Grid.Row>
-                          <Grid.Column></Grid.Column>
-                        </Grid.Row>
-                      </Grid>
+                      <List horizontal size="mini">
+                        <WeatherItem2
+                          icon={setIcon("max_temp")}
+                          value={forecast.day.maxtemp_c}
+                          title="Max Temp"
+                        />
+
+                        <WeatherItem2
+                          icon={setIcon("min_temp")}
+                          value={forecast.day.mintemp_c}
+                          title="Min Temp"
+                        />
+
+                        <WeatherItem2
+                          icon={setIcon("wind")}
+                          value={`${forecast.day.maxwind_kph} Km/h`}
+                          title="Max Wind"
+                        />
+
+                        <WeatherItem2
+                          icon={setIcon(`uv_index_${currentWeather.uv}`)}
+                          value={forecast.day.uv}
+                          title="UV Index"
+                        />
+                      </List>
                     </Card.Description>
                   </Card.Content>
                   <Card.Content extra>

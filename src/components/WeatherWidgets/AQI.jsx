@@ -4,8 +4,8 @@ import ReactSpeedometer from "react-d3-speedometer";
 const AQI = (props) => {
     return (
       <ReactSpeedometer
-        width={400}
-        height={230}
+        width={300}
+        height={200}
         needleHeightRatio={0.7}
         value={props.value}
         currentValueText="AIR QUALITY INDEX"

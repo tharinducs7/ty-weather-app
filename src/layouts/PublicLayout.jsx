@@ -20,7 +20,7 @@ const PublicLayout = ({ children }) => {
             <Menu.Item as="a" header>
               <Image
                 size="mini"
-                src={setIcon("fallingStars")}
+                src={setIcon("logo")}
                 style={{ marginRight: "1.5em" }}
                 onClick={() => {
                   history.push("/");
@@ -39,33 +39,29 @@ const PublicLayout = ({ children }) => {
 
         <Container
           fluid
-          style={{ overflow: "auto", minHeight: "43em", marginTop: "2em" }}
+          style={{ overflow: "auto", minHeight: "43em", marginTop: "4em" }}
         >
-          <Segment basic padded="very">
-            {children}
-          </Segment>
+          <Segment basic>{children}</Segment>
         </Container>
 
         <Segment
           inverted
           vertical
-          style={{ bottom: "-100px", fixed: "bottom", width: "100%" }}
+          style={{ fixed: "bottom", width: "100%" }}
           fluid
         >
           <Container textAlign="center">
             <Image centered size="small" src="" />
             <List horizontal inverted divided link size="small">
-              <List.Item as="a" href="#">
-                Site Map
+              <List.Item as="a" href="https://www.weatherapi.com/">
+                <img
+                  src="//cdn.weatherapi.com/v4/images/weatherapi_logo.png"
+                  alt="Weather data by WeatherAPI.com"
+                  border="0"
+                />
               </List.Item>
-              <List.Item as="a" href="#">
-                Contact Us
-              </List.Item>
-              <List.Item as="a" href="#">
-                Terms and Conditions
-              </List.Item>
-              <List.Item as="a" href="#">
-                Privacy Policy
+              <List.Item as="a" href="https://github.com/tharinducs7">
+                Tharindu Chathuranga
               </List.Item>
             </List>
           </Container>
