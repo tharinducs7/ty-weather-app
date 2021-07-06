@@ -46,7 +46,7 @@ class HttpClient {
     async request() {
         try {
 
-            let url = `${process.env.REACT_APP_BASE_URL}${this.url}`;
+            let url = `https://api.weatherapi.com/v1${this.url}`;
 
             const headers = {
                 'Content-Type': 'application/json',
