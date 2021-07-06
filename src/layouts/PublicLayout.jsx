@@ -49,7 +49,7 @@ const PublicLayout = ({ children }) => {
         <Segment
           inverted
           vertical
-          style={{ bottom: "0px", fixed: "bottom", width: "100%" }}
+          style={{ bottom: "-100px", fixed: "bottom", width: "100%" }}
           fluid
         >
           <Container textAlign="center">

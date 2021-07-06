@@ -136,7 +136,7 @@ const Home = ({
               />
             </Segment>
           )}
-          <Segment>
+          <Segment textAlign='center'> 
             {currentWeather && (
               <AQI value={currentWeather.air_quality["gb-defra-index"]} />
             )}
